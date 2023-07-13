@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "5A35F6E7-0B7D-4115-A0A9-0E05183D7839",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Reciplease.xcodeproj",
+        "identifier" : "38CCD1922A556A3E00D61701",
+        "name" : "RecipleaseTests"
+      }
+    }
+  ],
+  "version" : 1
+}
