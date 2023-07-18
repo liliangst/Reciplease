@@ -64,6 +64,7 @@ class SearchViewController: UIViewController {
     }
 
     @IBAction func searchForRecipes() {
+        toggleShowActivityIndicator(show: true)
         RecipesService.shared.fetchRecipes(with: list) { result in
             switch result {
             case .success(let recipes):
@@ -73,6 +74,15 @@ class SearchViewController: UIViewController {
             case .failure(_):
                 self.displayError()
             }
+            self.toggleShowActivityIndicator(show: false)
+        }
+    }
+    
+    private func toggleShowActivityIndicator(show: Bool) {
+        if show {
+            searchButton.configuration?.showsActivityIndicator = true
+        } else {
+            searchButton.configuration?.showsActivityIndicator = false
         }
     }
 }
