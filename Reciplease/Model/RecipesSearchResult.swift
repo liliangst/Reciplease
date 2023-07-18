@@ -11,11 +11,14 @@ struct RecipesSearchResult: Decodable {
     private var hits: [RecipeHit]
     
     var count: Int
-    var list: [Recipe] {
+}
+
+extension RecipesSearchResult {
+    var list: [RecipeData] {
         hits.compactMap({$0.recipe})
     }
 }
 
 private struct RecipeHit: Decodable {
-    var recipe: Recipe
+    var recipe: RecipeData
 }

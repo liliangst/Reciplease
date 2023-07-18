@@ -9,7 +9,7 @@ import XCTest
 @testable import Reciplease
 import Alamofire
 
-final class RecipleaseTests: XCTestCase {
+final class RecipleaseServiceTests: XCTestCase {
 
     func testFetchRecipesWithErrorShouldFail() {
         let path = "/test/FetchRecipesWithErrorShouldFail"

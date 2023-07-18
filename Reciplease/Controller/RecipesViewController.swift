@@ -15,7 +15,7 @@ class RecipesViewController: UITableViewController {
         case search, favorite
     }
     
-    private var recipesList: [Recipe] {
+    private var recipesList: [RecipeData] {
         switch source {
         case .favorite:
             return RecipesRepository.shared.favorites
@@ -28,8 +28,17 @@ class RecipesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        if case .favorite = source {
+            RecipesRepository.shared.getFavorites { result in
+                switch result {
+                case .success(let favorites):
+                    RecipesRepository.shared.favorites = favorites
+                case .failure(_):
+                    displayAlert("An error occured while fetching your favorites recipes.")
+                }
+            }
+        }
     }
 }
 
@@ -48,5 +57,19 @@ extension RecipesViewController {
         cell.textLabel?.text = recipesList[indexPath.row].label
         
         return cell
+    }
+}
+
+extension RecipesViewController {
+    
+    func displayError() {
+        displayAlert("An error occured.")
+    }
+    
+    private func displayAlert(_ text: String) {
+        let alertVC = UIAlertController(title: "Whoops!",
+                                        message: text, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        return self.present(alertVC, animated: true, completion: nil)
     }
 }

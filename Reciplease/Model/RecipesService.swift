@@ -20,7 +20,7 @@ class RecipesService {
         self.apiUrl = url
     }
     
-    func fetchRecipes(with ingredients: [String], callback: @escaping (Result<[Recipe], Error>) -> Void) {
+    func fetchRecipes(with ingredients: [String], callback: @escaping (Result<[RecipeData], Error>) -> Void) {
         session.request(apiUrl, method: .get, parameters: ["app_id": Constants.app_id,
                                                       "app_key": Constants.app_key,
                                                       "type": "public",
