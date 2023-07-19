@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RecipesViewController: UITableViewController {
 
@@ -40,6 +41,11 @@ class RecipesViewController: UITableViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
 }
 
 extension RecipesViewController {
@@ -54,7 +60,10 @@ extension RecipesViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecipesViewController.cellIdentifier, for: indexPath)
         
-        cell.textLabel?.text = recipesList[indexPath.row].label
+        let recipe = recipesList[indexPath.row]
+        
+        cell.textLabel?.text = recipe.label
+        cell.imageView?.setImage(from: URL(string: recipe.image)!)
         
         return cell
     }
