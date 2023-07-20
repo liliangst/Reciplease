@@ -16,7 +16,7 @@ struct RecipeData: Decodable {
     var ingredientList: [String] {
         ingredients.compactMap({$0.food.capitalized})
     }
-    var totalTime: Double
+    var totalTime: Int
     
     var ingredients: [IngredientData]
 }

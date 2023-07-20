@@ -34,7 +34,7 @@ class RecipesRepository {
         let recipe = Recipe(context: coreDataStack.mainContext)
         recipe.label = recipeData.label
         recipe.imageUrl = recipeData.image
-        recipe.totalTime = recipeData.totalTime
+        recipe.totalTime = Int16(recipeData.totalTime)
         recipeData.ingredients.forEach { ingredientData in
             let ingredient = Ingredient(context: coreDataStack.mainContext)
             ingredient.name = ingredientData.food

@@ -13,8 +13,8 @@ extension Recipe {
     var data: RecipeData {
         let ingredientsData = ingredients!.allObjects.compactMap({($0 as! Ingredient).data})
         return RecipeData(label: self.label!,
-                   image: self.imageUrl!,
-                   totalTime: self.totalTime,
-                   ingredients: ingredientsData)
+                          image: self.imageUrl!,
+                          totalTime: Int(self.totalTime),
+                          ingredients: ingredientsData)
     }
 }

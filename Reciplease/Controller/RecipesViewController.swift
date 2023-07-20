@@ -26,6 +26,7 @@ class RecipesViewController: UITableViewController {
     }
     
     private static let cellIdentifier = "RecipeCell"
+    private static let segueToSingleRecipeIndentifier = "SingleRecipe"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,14 +59,23 @@ extension RecipesViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RecipesViewController.cellIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RecipesViewController.cellIdentifier, for: indexPath) as? RecipeTableViewCell else {
+            return UITableViewCell()
+        }
         
         let recipe = recipesList[indexPath.row]
-        
-        cell.textLabel?.text = recipe.label
-        cell.imageView?.setImage(from: URL(string: recipe.image)!)
+        cell.configure(with: recipe)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else {
+            return
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: RecipesViewController.segueToSingleRecipeIndentifier, sender: cell)
     }
 }
 
