@@ -25,13 +25,11 @@ class SearchViewController: UIViewController {
     private let cellIdentifier = "IngredientCell"
     private let segueToRecipesIdentifier = "SearchRecipes"
 
-    // TODO: Temp var
     var list: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ingredientTextField.delegate = self
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,7 +87,6 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: Set to array count from model
         if list.count > 0 {
             searchButton.isEnabled = true
         } else {

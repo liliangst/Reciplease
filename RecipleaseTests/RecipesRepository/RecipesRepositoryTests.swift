@@ -23,7 +23,7 @@ final class RecipesRepositoryTests: XCTestCase {
     func testSaveRecipeShouldSuccess() {
         let derivedContext = coreDataStack.newDerivedContext()
         repository = RecipesRepository(coreDataStack: coreDataStack, managedObjectContext: derivedContext)
-        let recipeData = RecipeData(label: "Test", image: "image", totalTime: 0.0, ingredients: [IngredientData(food: "test", text: "test test")])
+        let recipeData = RecipeData(label: "Test", image: "image", totalTime: 0, ingredients: [IngredientData(food: "test", text: "test test")], url: "")
         
         expectation(
           forNotification: .NSManagedObjectContextDidSave,
@@ -39,7 +39,7 @@ final class RecipesRepositoryTests: XCTestCase {
     }
     
     func testGetFavoriteShouldFail() {
-        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1.0, ingredients: [IngredientData(food: "Test", text: "test")])
+        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1, ingredients: [IngredientData(food: "Test", text: "test")], url: "")
         repository.save(recipeData: recipeData)
         
         repository.getFavorites { result in
@@ -53,7 +53,7 @@ final class RecipesRepositoryTests: XCTestCase {
     }
     
     func testGetFavoriteShouldSuccess() {
-        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1.0, ingredients: [IngredientData(food: "Test", text: "test")])
+        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1, ingredients: [IngredientData(food: "Test", text: "test")], url: "")
         repository.save(recipeData: recipeData)
         
         repository.getFavorites { result in
@@ -67,7 +67,7 @@ final class RecipesRepositoryTests: XCTestCase {
     }
     
     func testDeleteRecipeShouldFail() {
-        let recipeData = RecipeData(label: "RemoveTest", image: "test", totalTime: 3.0, ingredients: [])
+        let recipeData = RecipeData(label: "RemoveTest", image: "test", totalTime: 3, ingredients: [], url: "")
         
         repository.remove(recipeData: recipeData) { error in
             XCTAssertNotNil(error)
@@ -75,7 +75,7 @@ final class RecipesRepositoryTests: XCTestCase {
     }
     
     func testDeleteRecipeShouldSuccess() {
-        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1.0, ingredients: [IngredientData(food: "Test", text: "test")])
+        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1, ingredients: [IngredientData(food: "Test", text: "test")], url: "")
         repository.save(recipeData: recipeData)
         
         repository.remove(recipeData: recipeData) { error in

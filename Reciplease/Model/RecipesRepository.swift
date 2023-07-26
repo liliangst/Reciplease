@@ -29,12 +29,15 @@ class RecipesRepository {
     
     var recipes: [RecipeData] = []
     var favorites: [RecipeData] = []
+    var selectedRecipe: RecipeData?
     
     func save(recipeData: RecipeData) {
         let recipe = Recipe(context: coreDataStack.mainContext)
         recipe.label = recipeData.label
         recipe.imageUrl = recipeData.image
         recipe.totalTime = Int16(recipeData.totalTime)
+        recipe.url = recipeData.url
+
         recipeData.ingredients.forEach { ingredientData in
             let ingredient = Ingredient(context: coreDataStack.mainContext)
             ingredient.name = ingredientData.food
@@ -57,6 +60,9 @@ class RecipesRepository {
             }
             managedObjectContext.delete(recipe)
             coreDataStack.saveContext(managedObjectContext)
+            favorites.removeAll { recipe in
+                recipe.url == recipeData.url
+            }
             completion(nil)
         } catch {
             completion(error)

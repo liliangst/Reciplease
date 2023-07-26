@@ -21,7 +21,12 @@ class RecipesViewController: UITableViewController {
         case .favorite:
             return RecipesRepository.shared.favorites
         case .search:
-            return RecipesRepository.shared.recipes
+            return RecipesRepository.shared.recipes.map { recipe in
+                guard let index = RecipesRepository.shared.favorites.firstIndex(of: recipe) else {
+                    return recipe
+                }
+                return RecipesRepository.shared.favorites[index]
+            }
         }
     }
     
@@ -30,7 +35,11 @@ class RecipesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         if case .favorite = source {
             RecipesRepository.shared.getFavorites { result in
                 switch result {
@@ -41,10 +50,8 @@ class RecipesViewController: UITableViewController {
                 }
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        // Reloading data into recipesList
+        _ = recipesList
         tableView.reloadData()
     }
 }
@@ -73,7 +80,7 @@ extension RecipesViewController {
         guard let cell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else {
             return
         }
-        
+        RecipesRepository.shared.selectedRecipe = recipesList[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: RecipesViewController.segueToSingleRecipeIndentifier, sender: cell)
     }

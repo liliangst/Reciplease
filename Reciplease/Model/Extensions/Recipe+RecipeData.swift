@@ -12,9 +12,11 @@ import CoreData
 extension Recipe {
     var data: RecipeData {
         let ingredientsData = ingredients!.allObjects.compactMap({($0 as! Ingredient).data})
-        return RecipeData(label: self.label!,
-                          image: self.imageUrl!,
+        return RecipeData(label: self.label ?? "",
+                          image: self.imageUrl ?? "",
                           totalTime: Int(self.totalTime),
-                          ingredients: ingredientsData)
+                          ingredients: ingredientsData,
+                          url: self.url ?? "",
+                          isFavorite: true)
     }
 }

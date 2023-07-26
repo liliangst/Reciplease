@@ -35,20 +35,7 @@ class RecipeTableViewCell: UITableViewCell {
         if recipeData.totalTime == 0 {
             recipeTimeDisplayer.isHidden = true
         } else {
-            recipeTime.text = getTimeString(time: recipeData.totalTime)
+            recipeTime.text = TimeFormatter.format(recipeData.totalTime)
         }
     }
-    
-    private func getTimeString(time: Int) -> String {
-        let h = time / 60
-        let m = time % 60
-        guard h > 0 else {
-            return "\(m)m"
-        }
-        guard m > 0 else {
-            return "\(h)h"
-        }
-        return "\(h)h\(m)"
-    }
-
 }
