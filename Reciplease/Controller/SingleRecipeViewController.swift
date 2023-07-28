@@ -84,7 +84,6 @@ class SingleRecipeViewController: UIViewController {
     }
     
     @IBAction func tapGetDirections() {
-        // Open web view here
         guard RecipesRepository.shared.selectedRecipe?.url != nil else {
             displayAlert("Can't open web view for directions.")
             return

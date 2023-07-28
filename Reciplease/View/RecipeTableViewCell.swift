@@ -34,6 +34,7 @@ class RecipeTableViewCell: UITableViewCell {
         if recipeData.totalTime == 0 {
             recipeTimeDisplayer.isHidden = true
         } else {
+            recipeTimeDisplayer.isHidden = false
             recipeTime.text = TimeFormatter.format(recipeData.totalTime)
         }
     }
