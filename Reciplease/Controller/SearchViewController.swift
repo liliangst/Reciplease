@@ -9,8 +9,16 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet weak var ingredientsTableView: UITableView!
-    @IBOutlet weak var ingredientTextField: UITextField!
+    @IBOutlet weak var ingredientsTableView: UITableView! {
+        didSet {
+            ingredientsTableView.accessibilityLabel = "Ingredients list"
+        }
+    }
+    @IBOutlet weak var ingredientTextField: UITextField! {
+        didSet {
+            ingredientTextField.accessibilityLabel = "Insert ingredient"
+        }
+    }
     @IBOutlet weak var addButton: UIButton! {
         didSet {
             addButton.isEnabled = false

@@ -38,7 +38,7 @@ class RecipesViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
 
         if case .favorite = source {
             RecipesRepository.shared.getFavorites { result in
@@ -46,13 +46,20 @@ class RecipesViewController: UITableViewController {
                 case .success(let favorites):
                     RecipesRepository.shared.favorites = favorites
                 case .failure(_):
-                    displayAlert("An error occured while fetching your favorites recipes.")
+                    displayAlert(title: "Whoops!", "An error occured while fetching your favorites recipes.")
                 }
             }
         }
         // Reloading data into recipesList
         _ = recipesList
         tableView.reloadData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if recipesList.isEmpty {
+            displayEmptyListMessage()
+        }
     }
 }
 
@@ -89,13 +96,23 @@ extension RecipesViewController {
 extension RecipesViewController {
     
     func displayError() {
-        displayAlert("An error occured.")
+        displayAlert(title: "Whoops!", "An error occured.")
     }
     
-    private func displayAlert(_ text: String) {
-        let alertVC = UIAlertController(title: "Whoops!",
+    func displayEmptyListMessage() {
+        switch source {
+        case .favorite:
+            displayAlert(title: "You have no favorite", "You have no recipe listed as favorite.\nTo add a recipe to your favorite tap the star icon when looking at a recipe.")
+        case .search:
+            displayAlert(title: "Empty list", "Your research lead to no result. Maybe try with other ingredients.")
+        }
+    }
+    
+    private func displayAlert(title: String, _ text: String) {
+        let alertVC = UIAlertController(title: title,
                                         message: text, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        alertVC.view.tintColor = UIColor(named: "Green")
         return self.present(alertVC, animated: true, completion: nil)
     }
 }

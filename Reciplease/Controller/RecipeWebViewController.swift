@@ -11,12 +11,13 @@ import WebKit
 class RecipeWebViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var backButton: UIButton! 
+    @IBOutlet weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let url = URL(string: RecipesRepository.shared.selectedRecipe!.url)!
         webView.load(URLRequest(url: url))
+        webView.isInspectable = true
     }
 
     @IBAction func tapBackToReciplease() {
