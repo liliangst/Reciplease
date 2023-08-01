@@ -39,15 +39,23 @@ final class RecipesRepositoryTests: XCTestCase {
     }
     
     func testGetFavoriteShouldFail() {
-        let recipeData = RecipeData(label: "Test", image: "test", totalTime: 1, ingredients: [IngredientData(food: "Test", text: "test")], url: "")
-        repository.save(recipeData: recipeData)
+        let wrongManagedObjectContext = {
+            let container = NSPersistentContainer(name: "Test")
+            container.loadPersistentStores { _, error in
+              if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+              }
+            }
+            return container.viewContext
+        }()
+        repository = RecipesRepository(coreDataStack: coreDataStack, managedObjectContext: wrongManagedObjectContext)
         
         repository.getFavorites { result in
             switch result {
-            case .success(let recipes):
-                XCTAssertFalse(recipes.isEmpty)
+            case .success(_):
+                XCTFail("Should fail")
             case .failure(let error):
-                XCTFail("\(error)")
+                XCTAssertNotNil(error)
             }
         }
     }
